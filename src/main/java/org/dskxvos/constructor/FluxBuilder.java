@@ -14,11 +14,7 @@ public class FluxBuilder {
     private StringBuilder fluxStatement;
 
     private FluxBuilder (){
-        fluxStatement = new StringBuilder(
-                FiledConstants.from+"("+FiledConstants.bucket+":\""+FiledConstants.BUCKET_PLACEHOLDER+"\")" +
-                        FiledConstants.pipeOperator+FiledConstants.range+"("+FiledConstants.RANGE_PLACEHOLDER+")"+
-                        FiledConstants.filter+"("+FiledConstants.fn+": (r)=> r."+FiledConstants._measurement+" == \""+FiledConstants.MEASUREMENT_PLACEHOLDER+"\")"
-        );
+        fluxStatementBuild();
     }
 
     private FluxBuilder(String bucket, String measurement, ZoneOffset zoneOffset, LocalDateTime start,LocalDateTime stop) {
@@ -27,6 +23,10 @@ public class FluxBuilder {
         this.zoneOffset = zoneOffset;
         this.start = start;
         this.stop = stop;
+        fluxStatementBuild();
+    }
+
+    private void fluxStatementBuild(){
         fluxStatement = new StringBuilder(
                 FiledConstants.from+"( \""+FiledConstants.BUCKET_PLACEHOLDER+"\")" +
                         FiledConstants.pipeOperator+FiledConstants.range+"("+FiledConstants.RANGE_PLACEHOLDER+")"+

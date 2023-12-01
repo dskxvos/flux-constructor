@@ -15,7 +15,7 @@ public class FluxBuilder {
 
     private FluxBuilder (){
         fluxStatement = new StringBuilder(
-                FiledConstants.from+"( \""+FiledConstants.BUCKET_PLACEHOLDER+"\")" +
+                FiledConstants.from+"("+FiledConstants.bucket+":\""+FiledConstants.BUCKET_PLACEHOLDER+"\")" +
                         FiledConstants.pipeOperator+FiledConstants.range+"("+FiledConstants.RANGE_PLACEHOLDER+")"+
                         FiledConstants.filter+"("+FiledConstants.fn+": (r)=> r."+FiledConstants._measurement+" == \""+FiledConstants.MEASUREMENT_PLACEHOLDER+"\")"
         );
@@ -77,6 +77,7 @@ public class FluxBuilder {
     }
 
 
+
     private String assignment(){
 
         assignmentCheck();
@@ -85,8 +86,9 @@ public class FluxBuilder {
 
         statement = assignmentBucket(statement);
 
-        statement = assignmentBucket(statement);
+        statement = assignmentRange(statement);
 
+        statement = assignmentMeasurement(statement);
         return statement;
     }
 
@@ -96,13 +98,21 @@ public class FluxBuilder {
     }
 
     private String assignmentRange(String statement){
-
         StringBuilder rangeArgs = new StringBuilder();
         if (null != this.start){
-            rangeArgs.append(FiledConstants.start);
+            rangeArgs.append(FiledConstants.start+": "+this.start.toInstant(zoneOffset));
         }
+        if (null != this.start && null != this.stop){
+            rangeArgs.append(",");
+        }
+        if (null != this.stop){
+            rangeArgs.append(FiledConstants.stop+": "+this.stop.toInstant(zoneOffset));
+        }
+        return statement.replace(FiledConstants.range,rangeArgs);
+    }
 
-        return statement;
+    private String assignmentMeasurement(String statement){
+        return statement.replace(FiledConstants.MEASUREMENT_PLACEHOLDER,this.measurement);
     }
 
     private void assignmentCheck(){
@@ -116,6 +126,10 @@ public class FluxBuilder {
 
         if (null == this.measurement || "".equals(this.measurement.trim())){
             throw new RuntimeException("measurement cannot be empty");
+        }
+
+        if (null == this.zoneOffset){
+            throw new RuntimeException("zoneOffset cannot be empty");
         }
 
 

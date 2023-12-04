@@ -1,9 +1,17 @@
 package org.dskxvos.constructor;
 
+import org.dskxvos.function.Function;
+
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 public class FluxBuilder {
+
+    public final static String BUCKET_PLACEHOLDER = "#BUCKET_PLACEHOLDER";
+
+    public final static String RANGE_PLACEHOLDER = "#RANGE_PLACEHOLDER";
+
+    public final static String MEASUREMENT_PLACEHOLDER = "#MEASUREMENT_PLACEHOLDER";
 
     private String bucket;
     private String measurement;
@@ -28,9 +36,9 @@ public class FluxBuilder {
 
     private void fluxStatementBuild(){
         fluxStatement = new StringBuilder(
-                FiledConstants.from+"( \""+FiledConstants.BUCKET_PLACEHOLDER+"\")" +
-                        FiledConstants.pipeOperator+FiledConstants.range+"("+FiledConstants.RANGE_PLACEHOLDER+")"+
-                        FiledConstants.filter+"("+FiledConstants.fn+": (r)=> r."+FiledConstants._measurement+" == \""+FiledConstants.MEASUREMENT_PLACEHOLDER+"\")"
+                FiledConstants.from+"("+FiledConstants.bucket+": \""+BUCKET_PLACEHOLDER+"\")" +
+                        FiledConstants.pipeOperator+FiledConstants.range+"("+RANGE_PLACEHOLDER+")"+
+                        FiledConstants.filter+"("+FiledConstants.fn+": (r)=> r."+FiledConstants._measurement+" == \""+MEASUREMENT_PLACEHOLDER+"\")"
         );
     }
 
@@ -76,6 +84,14 @@ public class FluxBuilder {
         return this;
     }
 
+    public FluxBuilder function(Function function){
+        fluxStatement.append(function.toStatement());
+        return this;
+    }
+
+    public String build(){
+        return assignment();
+    }
 
 
     private String assignment(){
@@ -94,7 +110,7 @@ public class FluxBuilder {
 
 
     private String assignmentBucket(String statement){
-       return statement.replace(FiledConstants.BUCKET_PLACEHOLDER,this.bucket);
+       return statement.replace(BUCKET_PLACEHOLDER,this.bucket);
     }
 
     private String assignmentRange(String statement){
@@ -112,7 +128,7 @@ public class FluxBuilder {
     }
 
     private String assignmentMeasurement(String statement){
-        return statement.replace(FiledConstants.MEASUREMENT_PLACEHOLDER,this.measurement);
+        return statement.replace(MEASUREMENT_PLACEHOLDER,this.measurement);
     }
 
     private void assignmentCheck(){
@@ -131,8 +147,6 @@ public class FluxBuilder {
         if (null == this.zoneOffset){
             throw new RuntimeException("zoneOffset cannot be empty");
         }
-
-
-
     }
+
 }

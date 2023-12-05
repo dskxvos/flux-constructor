@@ -66,7 +66,7 @@ public class Pivot implements Function{
         statement = statement.replace(COLUMNKEY_PLACEHOLDER, StringUtils.quotationMark(this.columnKey));
 
         // valueColumn
-        statement = statement.replace(valueColumn,"\""+this.valueColumn+"\"");
+        statement = statement.replace(VALUECOLUMN_PLACEHOLDER,"\""+this.valueColumn+"\"");
 
         return statement;
     }

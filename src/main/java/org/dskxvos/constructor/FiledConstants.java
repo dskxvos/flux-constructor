@@ -44,6 +44,8 @@ public class FiledConstants {
 
     public final static String n = "n";
 
+    public final static String group = "group";
+
 
 
 

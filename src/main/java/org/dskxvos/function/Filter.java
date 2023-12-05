@@ -31,12 +31,12 @@ public class Filter implements Function{
     }
 
     public Filter and(){
-        fluxStatement.append(Connector.And);
+        fluxStatement.append(Connector.And.expression);
         return this;
     }
 
     public Filter or(){
-        fluxStatement.append(Connector.Or);
+        fluxStatement.append(Connector.Or.expression);
         return this;
     }
 

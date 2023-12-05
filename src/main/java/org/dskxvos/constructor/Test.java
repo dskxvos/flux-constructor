@@ -1,0 +1,37 @@
+package org.dskxvos.constructor;
+
+import org.dskxvos.function.*;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Arrays;
+
+public class Test {
+    public static void main(String[] args) {
+        FluxBuilder fluxBuilder = new FluxBuilder();
+        fluxBuilder.zoneOffset(ZoneOffset.of("+8"))
+                .from("Vehicle")
+                .range(LocalDateTime.now().minusDays(5),LocalDateTime.now().plusHours(24))
+                .measurement("vehicle_trajectory")
+                .function(new Filter().fieldEq("_field","todayAccDuration"))
+                .function(new Top().n(1).columns(Arrays.asList("_value","_time")))
+                .function(new Group(Arrays.asList(FiledConstants._measurement,"_field")))
+                .function(new Top().n(5).columns(Arrays.asList("_value")));
+        System.out.println(fluxBuilder.build());
+    }
+
+
+    public static void testA(){
+        FluxBuilder fluxBuilder = new FluxBuilder();
+        fluxBuilder.zoneOffset(ZoneOffset.of("+8"))
+                .from("Vehicle")
+                .range(LocalDateTime.now().minusDays(5),LocalDateTime.now().plusHours(24))
+                .measurement("vehicle_trajectory")
+                .function(new Filter().tagEq("carId","7128678662206914560")
+                        .and().openParen().fieldEq("_field","address").or().fieldEq("_field","platformMileage").closeParen())
+                .function(new Sort(true,"_time"))
+                .function(new First("_time"))
+                .function(new Pivot().rowKey(Arrays.asList("_time","carId")).columnKey(Arrays.asList("_field")).valueColumn("_value"));
+        System.out.println(fluxBuilder.build());
+    }
+}

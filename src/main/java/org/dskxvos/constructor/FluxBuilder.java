@@ -21,7 +21,7 @@ public class FluxBuilder {
 
     private StringBuilder fluxStatement;
 
-    private FluxBuilder (){
+    public FluxBuilder (){
         fluxStatementBuild();
     }
 
@@ -38,7 +38,7 @@ public class FluxBuilder {
         fluxStatement = new StringBuilder(
                 FiledConstants.from+"("+FiledConstants.bucket+": \""+BUCKET_PLACEHOLDER+"\")" +
                         FiledConstants.pipeOperator+FiledConstants.range+"("+RANGE_PLACEHOLDER+")"+
-                        FiledConstants.filter+"("+FiledConstants.fn+": (r)=> r."+FiledConstants._measurement+" == \""+MEASUREMENT_PLACEHOLDER+"\")"
+                        FiledConstants.pipeOperator+FiledConstants.filter+"("+FiledConstants.fn+": (r)=> r."+FiledConstants._measurement+" == \""+MEASUREMENT_PLACEHOLDER+"\")"
         );
     }
 
@@ -68,7 +68,7 @@ public class FluxBuilder {
         return this;
     }
 
-    public FluxBuilder ZoneOffset(ZoneOffset zoneOffset){
+    public FluxBuilder zoneOffset(ZoneOffset zoneOffset){
         this.zoneOffset = zoneOffset;
         return this;
     }
@@ -124,7 +124,7 @@ public class FluxBuilder {
         if (null != this.stop){
             rangeArgs.append(FiledConstants.stop+": "+this.stop.toInstant(zoneOffset));
         }
-        return statement.replace(FiledConstants.range,rangeArgs);
+        return statement.replace(RANGE_PLACEHOLDER,rangeArgs);
     }
 
     private String assignmentMeasurement(String statement){

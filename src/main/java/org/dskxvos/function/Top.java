@@ -17,11 +17,13 @@ public class Top implements Function{
     private StringBuilder fluxStatement;
 
     public Top() {
+        statementBuild();
     }
 
     public Top(Long n, Collection<String> columns) {
         this.number = n;
         this.columns = columns;
+        statementBuild();
     }
 
 

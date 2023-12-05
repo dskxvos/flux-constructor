@@ -1,2 +1,2 @@
 # flux-constructor
-构建flux语句的Java库
+A JAVA LIBRARY FOR BUILD FLUX STATEMENTS

@@ -46,6 +46,13 @@ public class FiledConstants {
 
     public final static String group = "group";
 
+    public final static String _field = "_field";
+
+    public final static String _value = "_value";
+
+    public final static String _time = "_time";
+
+
 
 
 

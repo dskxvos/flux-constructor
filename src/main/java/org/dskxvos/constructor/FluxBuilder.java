@@ -2,6 +2,7 @@ package org.dskxvos.constructor;
 
 import org.dskxvos.function.Function;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
@@ -15,9 +16,8 @@ public class FluxBuilder {
 
     private String bucket;
     private String measurement;
-    private ZoneOffset zoneOffset;
-    private LocalDateTime start;
-    private LocalDateTime stop;
+    private Instant start;
+    private Instant stop;
 
     private StringBuilder fluxStatement;
 
@@ -25,10 +25,24 @@ public class FluxBuilder {
         fluxStatementBuild();
     }
 
-    private FluxBuilder(String bucket, String measurement, ZoneOffset zoneOffset, LocalDateTime start,LocalDateTime stop) {
+    private FluxBuilder(String bucket,String measurement,ZoneOffset zoneOffset,LocalDateTime start,LocalDateTime stop) {
+        if (null == zoneOffset){
+            throw new RuntimeException("zoneOffset cannot be empty");
+        }
         this.bucket = bucket;
         this.measurement = measurement;
-        this.zoneOffset = zoneOffset;
+        if (null != start){
+            this.start = start.toInstant(zoneOffset);
+        }
+        if (null != stop){
+            this.stop = stop.toInstant(zoneOffset);
+        }
+        fluxStatementBuild();
+    }
+
+    private FluxBuilder(String bucket, String measurement,Instant start,Instant stop) {
+        this.bucket = bucket;
+        this.measurement = measurement;
         this.start = start;
         this.stop = stop;
         fluxStatementBuild();
@@ -63,17 +77,30 @@ public class FluxBuilder {
         return fluxBuilder;
     }
 
+
+    public static FluxBuilder instance(String bucket, String measurement,Instant start,Instant stop){
+        FluxBuilder fluxBuilder = new FluxBuilder(bucket, measurement,start, stop);
+        return fluxBuilder;
+    }
+
     public FluxBuilder from(String bucket){
         this.bucket = bucket;
         return this;
     }
 
-    public FluxBuilder zoneOffset(ZoneOffset zoneOffset){
-        this.zoneOffset = zoneOffset;
+
+    public FluxBuilder range(LocalDateTime start,LocalDateTime stop,ZoneOffset zoneOffset){
+        if (null != start){
+            this.start = start.toInstant(zoneOffset);
+        }
+        if (null != stop){
+            this.stop = stop.toInstant(zoneOffset);
+        }
         return this;
     }
 
-    public FluxBuilder range(LocalDateTime start,LocalDateTime stop){
+
+    public FluxBuilder range(Instant start, Instant stop){
         this.start = start;
         this.stop = stop;
         return this;
@@ -110,19 +137,19 @@ public class FluxBuilder {
 
 
     private String assignmentBucket(String statement){
-       return statement.replace(BUCKET_PLACEHOLDER,this.bucket);
+        return statement.replace(BUCKET_PLACEHOLDER,this.bucket);
     }
 
     private String assignmentRange(String statement){
         StringBuilder rangeArgs = new StringBuilder();
         if (null != this.start){
-            rangeArgs.append(FiledConstants.start+": "+this.start.toInstant(zoneOffset));
+            rangeArgs.append(FiledConstants.start+": "+this.start);
         }
         if (null != this.start && null != this.stop){
             rangeArgs.append(",");
         }
         if (null != this.stop){
-            rangeArgs.append(FiledConstants.stop+": "+this.stop.toInstant(zoneOffset));
+            rangeArgs.append(FiledConstants.stop+": "+this.stop);
         }
         return statement.replace(RANGE_PLACEHOLDER,rangeArgs);
     }
@@ -144,9 +171,6 @@ public class FluxBuilder {
             throw new RuntimeException("measurement cannot be empty");
         }
 
-        if (null == this.zoneOffset){
-            throw new RuntimeException("zoneOffset cannot be empty");
-        }
     }
 
 }

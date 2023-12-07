@@ -8,10 +8,16 @@ import java.util.Arrays;
 
 public class Test {
     public static void main(String[] args) {
+        testA();
+        testB();
+    }
+
+
+    public static void testB(){
+        ZoneOffset zoneOffset = ZoneOffset.of("+8");
         FluxBuilder fluxBuilder = new FluxBuilder();
-        fluxBuilder.zoneOffset(ZoneOffset.of("+8"))
-                .from("Vehicle")
-                .range(LocalDateTime.now().minusDays(5),LocalDateTime.now().plusHours(24))
+        fluxBuilder.from("Vehicle")
+                .range(LocalDateTime.now().minusDays(5),LocalDateTime.now().plusHours(24),zoneOffset)
                 .measurement("vehicle_trajectory")
                 .function(new Filter().fieldEq("_field","todayAccDuration"))
                 .function(new Top().n(1).columns(Arrays.asList("_value","_time")))
@@ -20,12 +26,11 @@ public class Test {
         System.out.println(fluxBuilder.build());
     }
 
-
     public static void testA(){
+        ZoneOffset zoneOffset = ZoneOffset.of("+8");
         FluxBuilder fluxBuilder = new FluxBuilder();
-        fluxBuilder.zoneOffset(ZoneOffset.of("+8"))
-                .from("Vehicle")
-                .range(LocalDateTime.now().minusDays(5),LocalDateTime.now().plusHours(24))
+        fluxBuilder.from("Vehicle")
+                .range(LocalDateTime.now().minusDays(5),LocalDateTime.now().plusHours(24),zoneOffset)
                 .measurement("vehicle_trajectory")
                 .function(new Filter().tagEq("carId","7128678662206914560")
                         .and().openParen().fieldEq("_field","address").or().fieldEq("_field","platformMileage").closeParen())

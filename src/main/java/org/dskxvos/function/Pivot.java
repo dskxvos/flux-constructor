@@ -60,7 +60,7 @@ public class Pivot implements Function{
 
         // rowKey
         String statement = fluxStatement.toString();
-        statement = statement.replace(ROWKEY_PLACEHOLDER,StringUtils.quotationMark(this.rowKey));
+        statement = statement.replace(ROWKEY_PLACEHOLDER, StringUtils.quotationMark(this.rowKey));
 
         // columnKey
         statement = statement.replace(COLUMNKEY_PLACEHOLDER, StringUtils.quotationMark(this.columnKey));

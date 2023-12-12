@@ -7,7 +7,7 @@ public class Last implements Function{
     private StringBuilder fluxStatement;
 
     public Last(String column) {
-        fluxStatement = new StringBuilder(FiledConstants.pipeOperator+FiledConstants.last+"("+FiledConstants.column+":"+column+")");
+        fluxStatement = new StringBuilder(FiledConstants.pipeOperator+FiledConstants.last+"("+FiledConstants.column+":\""+column+"\")");
     }
 
     @Override

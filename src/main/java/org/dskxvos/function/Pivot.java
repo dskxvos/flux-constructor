@@ -56,7 +56,6 @@ public class Pivot implements Function{
 
     @Override
     public String toStatement() {
-        assignmentCheck();
 
         // rowKey
         String statement = fluxStatement.toString();
@@ -71,7 +70,8 @@ public class Pivot implements Function{
         return statement;
     }
 
-    private void assignmentCheck(){
+    @Override
+    public void argsCheck() {
         if (null == this.rowKey || this.rowKey.size()==0){
             throw new RuntimeException("The rowKey argument of function pivot cannot be null");
         }
@@ -84,4 +84,5 @@ public class Pivot implements Function{
             throw new RuntimeException("The valueColumn argument of function pivot cannot be null");
         }
     }
+
 }

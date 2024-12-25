@@ -112,6 +112,7 @@ public class FluxBuilder {
     }
 
     public FluxBuilder function(Function function){
+        function.argsCheck();
         fluxStatement.append(function.toStatement());
         return this;
     }

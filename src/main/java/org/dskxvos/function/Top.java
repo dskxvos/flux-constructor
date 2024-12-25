@@ -45,19 +45,21 @@ public class Top implements Function{
 
     @Override
     public String toStatement() {
-        assignmentCheck();
         String statement = fluxStatement.toString();
         statement = statement.replace(N_PLACEHOLDER,this.number.toString());
         statement = statement.replace(COLUMNS_PLACEHOLDER, StringUtils.quotationMark(this.columns));
         return statement;
     }
 
-    private void assignmentCheck(){
+
+    @Override
+    public void argsCheck() {
         if (null == this.number){
-            throw new RuntimeException("The n argument of function pivot cannot be null");
+            throw new RuntimeException("The n argument of function top cannot be null");
         }
         if (null == this.columns || this.columns.size()==0){
-            throw new RuntimeException("The columns argument of function pivot cannot be null");
+            throw new RuntimeException("The columns argument of function top cannot be null");
         }
     }
+
 }

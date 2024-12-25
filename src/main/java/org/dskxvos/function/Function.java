@@ -4,4 +4,6 @@ public interface Function {
 
     String toStatement();
 
+    default void argsCheck(){};
+
 }

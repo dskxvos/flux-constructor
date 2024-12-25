@@ -11,8 +11,8 @@ Example:
                 .measurement("measurement_name")
                 .function(new Filter().tagEq("tag_name","7128678662206914560")
                         .and().openParen().fieldEq(FieldConstants._field,"field_name").or().fieldEq(FieldConstants._field,"another_field_name").closeParen())
-                .function(new Top().n(1).columns(Arrays.asList(FieldConstants._value,FieldConstants._time)))
-                .function(new Group(Arrays.asList(FieldConstants._measurement,FieldConstants._field)))
+                .function(new Top().n(1).columns(List.of(FieldConstants._value,FieldConstants._time)))
+                .function(new Group(List.of(FieldConstants._measurement,FieldConstants._field)))
                 .function(new Top().n(5).columns(List.of(FieldConstants._value)));
         String flux = fluxBuilder.build();
         System.out.println(flux);

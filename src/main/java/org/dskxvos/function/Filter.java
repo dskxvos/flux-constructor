@@ -1,6 +1,6 @@
 package org.dskxvos.function;
 
-import org.dskxvos.constructor.FiledConstants;
+import org.dskxvos.constructor.FieldConstants;
 
 public class Filter implements Function{
 
@@ -10,7 +10,7 @@ public class Filter implements Function{
     private static final String predicate = "r";
 
     public Filter() {
-        fluxStatement = new StringBuilder(FiledConstants.pipeOperator+FiledConstants.filter+"("+FiledConstants.fn+":("+predicate+")=> ");
+        fluxStatement = new StringBuilder(FieldConstants.pipeOperator+ FieldConstants.filter+"("+ FieldConstants.fn+":("+predicate+")=> ");
     }
 
     @Override
@@ -26,7 +26,7 @@ public class Filter implements Function{
         if (null == value||"".equals(value.trim())){
             throw new RuntimeException("value cannot be empty");
         }
-        fluxStatement.append(predicate+"."+tag+Comparator.Equal.expression+"\""+value+"\"");
+        fluxStatement.append(predicate + ".").append(tag).append(Comparator.Equal.expression).append("\"").append(value).append("\"");
         return this;
     }
 

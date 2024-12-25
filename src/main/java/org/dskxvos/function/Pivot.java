@@ -1,6 +1,6 @@
 package org.dskxvos.function;
 
-import org.dskxvos.constructor.FiledConstants;
+import org.dskxvos.constructor.FieldConstants;
 import org.dskxvos.tools.StringUtils;
 
 import java.util.Collection;
@@ -32,10 +32,10 @@ public class Pivot implements Function{
     }
 
     private void statementBuild(){
-        fluxStatement = new StringBuilder(FiledConstants.pipeOperator+FiledConstants.pivot
-                +"("+FiledConstants.rowKey+":["+ROWKEY_PLACEHOLDER+"]," +
-                FiledConstants.columnKey+":["+COLUMNKEY_PLACEHOLDER+"]," +
-                FiledConstants.valueColumn+":"+VALUECOLUMN_PLACEHOLDER+")");
+        fluxStatement = new StringBuilder(FieldConstants.pipeOperator+ FieldConstants.pivot
+                +"("+ FieldConstants.rowKey+":["+ROWKEY_PLACEHOLDER+"]," +
+                FieldConstants.columnKey+":["+COLUMNKEY_PLACEHOLDER+"]," +
+                FieldConstants.valueColumn+":"+VALUECOLUMN_PLACEHOLDER+")");
     }
 
 

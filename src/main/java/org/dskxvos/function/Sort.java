@@ -1,6 +1,6 @@
 package org.dskxvos.function;
 
-import org.dskxvos.constructor.FiledConstants;
+import org.dskxvos.constructor.FieldConstants;
 import org.dskxvos.tools.StringUtils;
 
 import java.util.Arrays;
@@ -12,7 +12,7 @@ public class Sort implements Function{
 
     public Sort(boolean desc,String... columns) {
         Collection<String> columnsArg = Arrays.asList(columns);
-        fluxStatement = new StringBuilder(FiledConstants.pipeOperator+FiledConstants.sort+"("+FiledConstants.columns+": ["+ StringUtils.quotationMark(columnsArg) +"],"+FiledConstants.desc+":"+desc+")");
+        fluxStatement = new StringBuilder(FieldConstants.pipeOperator+ FieldConstants.sort+"("+ FieldConstants.columns+": ["+ StringUtils.quotationMark(columnsArg) +"],"+ FieldConstants.desc+":"+desc+")");
     }
 
     @Override

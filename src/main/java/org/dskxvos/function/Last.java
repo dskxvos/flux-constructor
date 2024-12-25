@@ -1,13 +1,13 @@
 package org.dskxvos.function;
 
-import org.dskxvos.constructor.FiledConstants;
+import org.dskxvos.constructor.FieldConstants;
 
 public class Last implements Function{
 
     private StringBuilder fluxStatement;
 
     public Last(String column) {
-        fluxStatement = new StringBuilder(FiledConstants.pipeOperator+FiledConstants.last+"("+FiledConstants.column+":\""+column+"\")");
+        fluxStatement = new StringBuilder(FieldConstants.pipeOperator+ FieldConstants.last+"("+ FieldConstants.column+":\""+column+"\")");
     }
 
     @Override

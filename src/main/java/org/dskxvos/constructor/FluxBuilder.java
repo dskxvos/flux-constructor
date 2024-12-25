@@ -50,9 +50,9 @@ public class FluxBuilder {
 
     private void fluxStatementBuild(){
         fluxStatement = new StringBuilder(
-                FiledConstants.from+"("+FiledConstants.bucket+": \""+BUCKET_PLACEHOLDER+"\")" +
-                        FiledConstants.pipeOperator+FiledConstants.range+"("+RANGE_PLACEHOLDER+")"+
-                        FiledConstants.pipeOperator+FiledConstants.filter+"("+FiledConstants.fn+": (r)=> r."+FiledConstants._measurement+" == \""+MEASUREMENT_PLACEHOLDER+"\")"
+                FieldConstants.from+"("+ FieldConstants.bucket+": \""+BUCKET_PLACEHOLDER+"\")" +
+                        FieldConstants.pipeOperator+ FieldConstants.range+"("+RANGE_PLACEHOLDER+")"+
+                        FieldConstants.pipeOperator+ FieldConstants.filter+"("+ FieldConstants.fn+": (r)=> r."+ FieldConstants._measurement+" == \""+MEASUREMENT_PLACEHOLDER+"\")"
         );
     }
 
@@ -143,13 +143,13 @@ public class FluxBuilder {
     private String assignmentRange(String statement){
         StringBuilder rangeArgs = new StringBuilder();
         if (null != this.start){
-            rangeArgs.append(FiledConstants.start+": "+this.start);
+            rangeArgs.append(FieldConstants.start+": "+this.start);
         }
         if (null != this.start && null != this.stop){
             rangeArgs.append(",");
         }
         if (null != this.stop){
-            rangeArgs.append(FiledConstants.stop+": "+this.stop);
+            rangeArgs.append(FieldConstants.stop+": "+this.stop);
         }
         return statement.replace(RANGE_PLACEHOLDER,rangeArgs);
     }

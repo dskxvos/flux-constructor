@@ -1,6 +1,6 @@
 package org.dskxvos.function;
 
-import org.dskxvos.constructor.FiledConstants;
+import org.dskxvos.constructor.FieldConstants;
 
 public class First implements Function{
 
@@ -8,7 +8,7 @@ public class First implements Function{
 
 
     public First(String column) {
-        fluxStatement = new StringBuilder(FiledConstants.pipeOperator+FiledConstants.first+"("+FiledConstants.column+": \""+column+"\")");
+        fluxStatement = new StringBuilder(FieldConstants.pipeOperator+ FieldConstants.first+"("+ FieldConstants.column+": \""+column+"\")");
     }
 
 

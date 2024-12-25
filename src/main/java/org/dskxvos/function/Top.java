@@ -1,6 +1,6 @@
 package org.dskxvos.function;
 
-import org.dskxvos.constructor.FiledConstants;
+import org.dskxvos.constructor.FieldConstants;
 import org.dskxvos.tools.StringUtils;
 
 import java.util.Collection;
@@ -28,8 +28,8 @@ public class Top implements Function{
 
 
     private void statementBuild(){
-        fluxStatement = new StringBuilder(FiledConstants.pipeOperator+FiledConstants.top+"("+FiledConstants.n+":"+N_PLACEHOLDER+","
-                +FiledConstants.columns+":["+COLUMNS_PLACEHOLDER+"])");
+        fluxStatement = new StringBuilder(FieldConstants.pipeOperator+ FieldConstants.top+"("+ FieldConstants.n+":"+N_PLACEHOLDER+","
+                + FieldConstants.columns+":["+COLUMNS_PLACEHOLDER+"])");
     }
 
 

@@ -1,6 +1,6 @@
 package org.dskxvos.constructor;
 
-public class FiledConstants {
+public class FieldConstants {
 
     public final static String from = "from";
 
